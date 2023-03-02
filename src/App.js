@@ -1,37 +1,27 @@
-import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
+import Sidebar from "./Sidebar";
+import NoteView from "./NoteView"
+import NoteEditor from "./NoteEditor"
+import NoteTest from "./NoteTest"
+
+// Controls all your routing logic
 
 function App() {
   
-  const [isHidden, toggleHidden] = useState(false); // Default state is false
-  function toggleNoteVisibility() { // Function that is called if button is clicked
-    toggleHidden(!isHidden);
-  }
-  
   return (
-    <>
-      <div id="title-bar">
-        <button id="show-notes" onClick={toggleNoteVisibility}>&#9776;</button> {/* Calls toggleNoteVisibility if clicked */}
-        <div id="title">
-          <h1>Lotion</h1>
-          <p id="description"><strong>Like Notion, but worse.</strong></p>
-        </div>
-      </div>
-
-      <div id="content">
-        <div id="note-list" className={isHidden ? "hidden" : ""}> {/* Ternary operator: will add hidden class if isHidden is true (otherwise nothing) */}
-          <div id="note-list-header">
-            <h3 id="note-list-header-text">Notes</h3>
-            <button id="add-new">&#43;</button>
-          </div>
-          <div id="note-identifiers">
-            <p id="no-note-yet">No Note Yet</p>
-          </div>
-        </div>
-        <div id="note-content">
-          Select a note, or create a new one.
-        </div>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<NoteView />}></Route> 
+          {/* Need to add it so that if there are no notes then it displays the default page thing
+          Add a path for editing */}
+          <Route path="/edit" element={<NoteEditor />}></Route>
+          <Route path="/test" element={<NoteTest />}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    
   );
 }
 
