@@ -1,7 +1,8 @@
 
-function Sidebar() {
+function Sidebar(props) {
+    const visibilityClass = props.visibility ? "hidden" : "";
     return (
-        <div id="note-list"> {/* Ternary operator: will add hidden class if isHidden is true (otherwise nothing) */}
+        <div id="note-list" className={visibilityClass}> {/* Ternary operator: will add hidden class if isHidden is true (otherwise nothing) */}
             <div id="note-list-header">
                 <h3 id="note-list-header-text">Notes</h3>
                 <button id="add-new">&#43;</button>
