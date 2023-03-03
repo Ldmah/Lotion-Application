@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from './Sidebar';
 import NoteEditor from './NoteEditor';
+import uuid from "react-uuid";
 
 // Layout is what controls all your logic for the content
-
-
-
 
 function Layout() {
     // This function allows the sidebar to appear and disappear depending on the button clicks
@@ -17,6 +15,19 @@ function Layout() {
 
     // This function keeps track of all the notes
     const [notes, allNotes] = useState([]);
+
+    // This function creates a new note in the Sidebar
+    const createNewNote = () => {
+        console.log("dog")
+        let note = {
+            id: uuid(),
+            title: "Untitled",
+            date: Date.now(), // Need to update this later to match the date used in the NoteEditor
+            body: "...",
+        };
+        allNotes([note, ...notes]);
+    }
+
 
     return (
         <>
@@ -29,7 +40,7 @@ function Layout() {
             </div>
 
             <div id="content">
-                <Sidebar visibility={isHidden} notesList={notes}/>
+                <Sidebar visibility={isHidden} notesList={notes} createNewNote={createNewNote} />
                 <Outlet  />
             </div>
 

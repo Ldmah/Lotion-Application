@@ -195,7 +195,8 @@ a {
 }
 
 #note-list-header-text {
-  margin-left: 0.5rem;
+  margin-left: 1rem;
+  font-size: 1.5rem;
 }
 
 #no-note-yet {
@@ -274,6 +275,14 @@ a {
 .date {
   padding: 0;
   margin: 0;
+}
+
+.note-item {
+  padding-left: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+
 }
 
 
