@@ -73,7 +73,7 @@ a {
 }
 
 #note-list {
-  flex: 1;
+  flex: 1.2;
   border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
 }
 
@@ -282,7 +282,24 @@ a {
   padding-top: 1rem;
   padding-bottom: 1rem;
   border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+  padding-right: 1rem;
 
 }
+
+.note-item-title {
+  font-size: 1.1rem;
+}
+
+.note-item-date {
+  color: grey;
+  font-size: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.6rem;
+}
+
+.note-item-preview {
+  font-size: 0.8rem;
+}
+
 
 

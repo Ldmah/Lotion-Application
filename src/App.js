@@ -3,7 +3,6 @@ import Layout from "./Layout";
 import Sidebar from "./Sidebar";
 import NoteView from "./NoteView"
 import NoteEditor from "./NoteEditor"
-import NoteTest from "./NoteTest"
 
 // Controls all your routing logic
 
@@ -17,7 +16,7 @@ function App() {
           {/* Need to add it so that if there are no notes then it displays the default page thing
           Add a path for editing */}
           <Route path="/edit" element={<NoteEditor />}></Route>
-          <Route path="/test" element={<NoteTest />}></Route>
+          <Route path="/view" element={<NoteView />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

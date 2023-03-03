@@ -1,12 +1,14 @@
 import ReactQuill from 'react-quill';
 import React, { useState, useEffect } from "react";
 import 'react-quill/dist/quill.snow.css';
-import Sidebar from "./Sidebar";
+import { useOutletContext } from "react-router-dom";
 
 
 
 function NoteEditor() {
-
+    // This is taking the outlet information
+    const [notesList, activeNote] = useOutletContext();
+    // This is setting values from the React Quill Editor
     const [value, setValue] = useState('');
     // Ensures that all values are two digit strings even if only one digit in lenght (values 1-9)
     const twoDigit = (value) => {
@@ -14,7 +16,7 @@ function NoteEditor() {
         {
             return '0' + value;
         }
-        else{
+        else {
             return value;
         }
     }
