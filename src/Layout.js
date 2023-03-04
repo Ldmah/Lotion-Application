@@ -26,7 +26,6 @@ function Layout() {
         };
         currentNote(note);
         allNotes([note, ...notes]);
-        
     }
 
     // This function deletes the current note
@@ -44,6 +43,8 @@ function Layout() {
     const currentNote = (newNote) => {
         changeActiveNote(newNote);
     }
+
+    // This function retrieves the information from the ReactQuill Editor, the date, and the title
 
     return (
         <>

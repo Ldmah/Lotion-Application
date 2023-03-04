@@ -1,5 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
+
 function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activeNote }) {
     const visibilityClass = visibility ? "hidden" : "";
+    const navigate = useNavigate();
     return (
         <div id="note-list" className={visibilityClass}>
             <div id="note-list-header">

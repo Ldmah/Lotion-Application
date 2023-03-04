@@ -1,5 +1,5 @@
 import ReactQuill from 'react-quill';
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import 'react-quill/dist/quill.snow.css';
 import { useOutletContext } from "react-router-dom";
 
@@ -8,8 +8,7 @@ import { useOutletContext } from "react-router-dom";
 function NoteEditor() {
     // This is taking the outlet information
     const [notesList, activeNote, deleteCurrentNote] = useOutletContext();
-    // This is setting values from the React Quill Editor
-    const [value, setValue] = useState('');
+    
     // Ensures that all values are two digit strings even if only one digit in lenght (values 1-9)
     const twoDigit = (value) => {
         if (value.length < 2)
@@ -33,7 +32,7 @@ function NoteEditor() {
         }
     }
 
-    // Retrieving date and formatting for the input type to output the correct value
+    // Retrieving date and formatting for the input type to output the correct value in the header
     const formatDate = (when) => {
         let formatted = new Date(when).toLocaleString();
         if (formatted === "Invalid Date") {
@@ -53,21 +52,58 @@ function NoteEditor() {
         formatted = year + "-" + month + "-" + day + "T" + hours + ":" + minutes + ":" + seconds;
         return formatted;
     }
+    
+    // Setting up string formatting for the return sidebar value
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    };
+    
+    const formatDateSidebar = (when) => {
+        const formatted = new Date(when).toLocaleString("en-US", options);
+        if (formatted === "Invalid Date") {
+            return "";
+        }
+        return formatted;
+    };
 
+    // Setting up a state to keep track of the formatted date shown in the header title
     const [date, setDate] = useState(formatDate(new Date()));
+
+    // Setting up states to contain the contents of each edited note
+    const [currentTitle, setTitle] = useState("Untitled");
+
+    // Saving current data in the Quill Editor and saving it to view; redirecting to the corresponding view
+    const quillRef = useRef(null);
+    const save = () => {
+        const html = quillRef.current.getEditor().container.firstChild.innerHTML;
+        let content = {
+            body: html,
+            title: currentTitle,
+            date: formatDateSidebar(date),
+        }
+        
+        console.log(content);
+
+    };
+    
+    
 
     return (
         <div className="note-content">
             <div className="note-title">
                 <div id="information">
-                    <input type="text" id="note-edit-title"></input>
+                    <input type="text" id="note-edit-title" value={currentTitle} onChange={(newValue) => setTitle(newValue.target.value)}></input>
                     <div className="date">
                         <input id="datetime" type="datetime-local" value={date} onChange={(newValue) => setDate(newValue.target.value)}/>
                     </div>
                 </div>
 
                 <div id="buttons">
-                    <button id="save">Save</button>
+                    <button id="save" onClick={save}>Save</button>
                     <button id="delete" onClick={() => {
                         deleteCurrentNote(activeNote);
                     }}>Delete</button>
@@ -76,7 +112,7 @@ function NoteEditor() {
                 
             </div>
             <div id="editor">
-                <ReactQuill value={value} onChange={setValue}/>
+                <ReactQuill ref={quillRef} />
             </div>
         </div>
         
@@ -84,3 +120,4 @@ function NoteEditor() {
 }
 
 export default NoteEditor;
+
