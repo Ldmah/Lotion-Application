@@ -19,7 +19,7 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
                                 <strong>{note.title}</strong>
                             </div>
                             <div className="note-item-date">
-                                arbitrary date
+                                {note.date}
                             </div>
                             <div className="note-item-preview">
                                 {note.body.substring(0, 20) + "\n" + note.body.substring(20, 38) + "..."}

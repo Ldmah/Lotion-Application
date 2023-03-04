@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 
 function NoteView() {
-    const [notesList, activeNote, deleteCurrentNote] = useOutletContext();
+    const [notesList, activeNote, deleteCurrentNote, saveNote] = useOutletContext();
     return (
         <div className="note-content">
             {notesList.length == 0 ? (

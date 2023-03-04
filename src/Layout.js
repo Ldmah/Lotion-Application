@@ -21,7 +21,7 @@ function Layout() {
         let note = {
             id: uuid(),
             title: "Untitled",
-            date: Date.now(), // Need to update this later to match the date used in the NoteEditor
+            date: "", // Need to update this later to match the date used in the NoteEditor
             body: "",
         };
         currentNote(note);
@@ -44,7 +44,25 @@ function Layout() {
         changeActiveNote(newNote);
     }
 
-    // This function retrieves the information from the ReactQuill Editor, the date, and the title
+    // This function retrieves the information from the ReactQuill Editor, the date, and the title and puts it into the note object
+    const saveNote = (content) => {
+        const saveNoteInfo = notes.map((note) => {
+            if (content.id == note.id)
+            {
+                return {
+                    id: note.id,
+                    title: content.title,
+                    date: content.date,
+                    body: content.body,
+                }
+                
+            }
+            else {
+                return note;
+            }
+        });
+        allNotes(saveNoteInfo);
+    }
 
     return (
         <>
@@ -58,7 +76,7 @@ function Layout() {
 
             <div id="content">
                 <Sidebar visibility={isHidden} notesList={notes} createNewNote={createNewNote} changeActiveNote={changeActiveNote} activeNote={activeNote} />
-                <Outlet context={[notes, activeNote, deleteCurrentNote]} />
+                <Outlet context={[notes, activeNote, deleteCurrentNote, saveNote]} />
             </div>
 
         </>

@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 
 function NoteEditor() {
     // This is taking the outlet information
-    const [notesList, activeNote, deleteCurrentNote] = useOutletContext();
+    const [notesList, activeNote, deleteCurrentNote, saveNote] = useOutletContext();
     
     // Ensures that all values are two digit strings even if only one digit in lenght (values 1-9)
     const twoDigit = (value) => {
@@ -80,17 +80,15 @@ function NoteEditor() {
     const quillRef = useRef(null);
     const save = () => {
         const html = quillRef.current.getEditor().container.firstChild.innerHTML;
+        
         let content = {
+            id: activeNote.id,
             body: html,
             title: currentTitle,
             date: formatDateSidebar(date),
         }
-        
-        console.log(content);
-
+        saveNote(content);
     };
-    
-    
 
     return (
         <div className="note-content">
@@ -103,7 +101,7 @@ function NoteEditor() {
                 </div>
 
                 <div id="buttons">
-                    <button id="save" onClick={save}>Save</button>
+                    <button id="save" onClick={(save)}>Save</button>
                     <button id="delete" onClick={() => {
                         deleteCurrentNote(activeNote);
                     }}>Delete</button>
