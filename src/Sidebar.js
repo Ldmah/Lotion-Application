@@ -1,9 +1,15 @@
 import { useNavigate } from "react-router-dom";
 
-
 function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activeNote }) {
     const visibilityClass = visibility ? "hidden" : "";
     const navigate = useNavigate();
+
+    function removeHtmlTags(stringWithTags) {
+        const temporaryElement = document.createElement("div");
+        temporaryElement.innerHTML = stringWithTags;
+        return temporaryElement.innerText;
+    }
+
     return (
         <div id="note-list" className={visibilityClass}>
             <div id="note-list-header">
@@ -12,9 +18,8 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
             </div>
             {notesList.length > 0 ? (
                 <div id="note-identifiers">
-                    {notesList.map((note) => ( // Map function is used so that for each element in the noteList, we are adding this HTML
-                    <div key={note.id} className={`note-item ${note.id === activeNote.id ? "clicked" : ""}`} onClick={() => changeActiveNote(note)}>
-
+                    {notesList.map((note) => (
+                        <div key={note.id} className={`note-item ${note.id === activeNote.id ? "clicked" : ""}`} onClick={() => changeActiveNote(note)}>
                             <div className="note-item-title">
                                 <strong>{note.title}</strong>
                             </div>
@@ -22,7 +27,7 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
                                 {note.date}
                             </div>
                             <div className="note-item-preview">
-                                {note.body.substring(0, 20) + "\n" + note.body.substring(20, 38) + "..."}
+                                {removeHtmlTags(note.body).substring(0, 20) + "\n" + removeHtmlTags(note.body).substring(20, 38) + "..."}
                             </div>
                         </div>
                     ))}
