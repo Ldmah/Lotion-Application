@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 
 function NoteEditor() {
     // This is taking the outlet information
-    const [notesList, activeNote] = useOutletContext();
+    const [notesList, activeNote, deleteCurrentNote] = useOutletContext();
     // This is setting values from the React Quill Editor
     const [value, setValue] = useState('');
     // Ensures that all values are two digit strings even if only one digit in lenght (values 1-9)
@@ -39,7 +39,6 @@ function NoteEditor() {
         if (formatted === "Invalid Date") {
             return "";
         }
-        console.log(formatted);
         let tokens = formatted.split("/");
         let year = tokens[2].substring(0, 4)
         let month = twoDigit(tokens[0]);
@@ -69,7 +68,9 @@ function NoteEditor() {
 
                 <div id="buttons">
                     <button id="save">Save</button>
-                    <button id="delete">Delete</button>
+                    <button id="delete" onClick={() => {
+                        deleteCurrentNote(activeNote);
+                    }}>Delete</button>
                 </div>
 
                 

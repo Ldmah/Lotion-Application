@@ -24,33 +24,26 @@ function Layout() {
             date: Date.now(), // Need to update this later to match the date used in the NoteEditor
             body: "",
         };
-        currentNote(note.id);
+        currentNote(note);
         allNotes([note, ...notes]);
         
     }
 
-    // This function deletes the current note (THIS FUNCTION HAS NOT BEEN TESTED YET)
-    const deleteCurrentNote = (idDelete) => {
-        for (let i = 0; i < notes.length; i++)
-        {
-            if (notes[i].id == idDelete)
-            {
-                notes.splice(i, 1);
-            }
+    // This function deletes the current note
+    const deleteCurrentNote = (noteDelete) => {
+        const answer = window.confirm("Are you sure?");
+        if (answer) {
+            let stateWithoutDeleted = notes.filter((note) => note.id !== noteDelete.id);
+            allNotes(stateWithoutDeleted);
+            changeActiveNote(stateWithoutDeleted[0]);
         }
     }
 
     // This function keeps track of the current note being edited and viewed
-    const [activeNote, setActiveNote] = useState(null);
-    const currentNote = (newId) => {
-        setActiveNote(newId);
+    const [activeNote, changeActiveNote] = useState(null); // This manages the current active note, originally set to null (for nothing)
+    const currentNote = (newNote) => {
+        changeActiveNote(newNote);
     }
-
-    // This useEffect hook is used to give us the value straight away after an update to activeNote
-    // useEffect(() => {
-    //     console.log(activeNote); // In the state hook, it will not update until the next render
-    // }, [activeNote]);
-
 
     return (
         <>
@@ -63,8 +56,8 @@ function Layout() {
             </div>
 
             <div id="content">
-                <Sidebar visibility={isHidden} notesList={notes} createNewNote={createNewNote} />
-                <Outlet context={[notes, activeNote]} />
+                <Sidebar visibility={isHidden} notesList={notes} createNewNote={createNewNote} changeActiveNote={changeActiveNote} activeNote={activeNote} />
+                <Outlet context={[notes, activeNote, deleteCurrentNote]} />
             </div>
 
         </>

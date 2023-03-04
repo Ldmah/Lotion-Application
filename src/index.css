@@ -301,5 +301,9 @@ a {
   font-size: 0.8rem;
 }
 
+.clicked {
+  background: #433168;
+  color: white;
+}
 
 

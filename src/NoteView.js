@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 
 function NoteView() {
-    const [notesList, activeNote] = useOutletContext();
+    const [notesList, activeNote, deleteCurrentNote] = useOutletContext();
     return (
         <div className="note-content">
             {notesList.length == 0 ? (
@@ -19,7 +19,10 @@ function NoteView() {
                         </div>
                         <div id="buttons-view">
                             <button id="edit">Edit</button>
-                            <button id="delete">Delete</button>
+                            <button id="delete" onClick={() => {
+                                deleteCurrentNote(activeNote);
+                            }}>Delete</button>
+
                         </div>
                     </div>
                     <div id="content-view">
@@ -60,5 +63,3 @@ function NoteView() {
 }
 
 export default NoteView;
-
-

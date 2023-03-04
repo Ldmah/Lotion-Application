@@ -1,4 +1,4 @@
-function Sidebar({ visibility, notesList, createNewNote }) {
+function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activeNote }) {
     const visibilityClass = visibility ? "hidden" : "";
     return (
         <div id="note-list" className={visibilityClass}>
@@ -9,7 +9,8 @@ function Sidebar({ visibility, notesList, createNewNote }) {
             {notesList.length > 0 ? (
                 <div id="note-identifiers">
                     {notesList.map((note) => ( // Map function is used so that for each element in the noteList, we are adding this HTML
-                        <div key={note.id} className="note-item">
+                    <div key={note.id} className={`note-item ${note.id === activeNote.id ? "clicked" : ""}`} onClick={() => changeActiveNote(note)}>
+
                             <div className="note-item-title">
                                 <strong>{note.title}</strong>
                             </div>

@@ -13,8 +13,6 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<NoteView />}></Route> 
-          {/* Need to add it so that if there are no notes then it displays the default page thing
-          Add a path for editing */}
           <Route path="/edit" element={<NoteEditor />}></Route>
           <Route path="/view" element={<NoteView />}></Route>
         </Route>
