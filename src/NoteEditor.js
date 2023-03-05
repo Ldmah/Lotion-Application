@@ -1,14 +1,14 @@
 import ReactQuill from 'react-quill';
 import React, { useState, useRef, useEffect } from "react";
 import 'react-quill/dist/quill.snow.css';
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 
 
 function NoteEditor() {
     // This is taking the outlet information
     const [notesList, activeNote, deleteCurrentNote, saveNote] = useOutletContext();
-    
+    const navigate = useNavigate();
     // Ensures that all values are two digit strings even if only one digit in lenght (values 1-9)
     const twoDigit = (value) => {
         if (value.length < 2)
@@ -88,8 +88,15 @@ function NoteEditor() {
             date: formatDateSidebar(date),
         }
         saveNote(content);
+        
     };
+    
+    const saveAndNav = () => {
+        save();
+        navigate('/notes/1');
+    }
 
+    // This function assists us in navigating from note to note in the edit section
     useEffect(() => {
         if (activeNote) {
             setTitle(activeNote.title);
@@ -110,7 +117,7 @@ function NoteEditor() {
                 </div>
 
                 <div id="buttons">
-                    <button id="save" onClick={(save)}>Save</button>
+                    <button id="save" onClick={(saveAndNav)} >Save</button>
                     <button id="delete" onClick={() => {
                         deleteCurrentNote(activeNote);
                     }}>Delete</button>

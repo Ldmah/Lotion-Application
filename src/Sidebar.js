@@ -4,11 +4,16 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
     const visibilityClass = visibility ? "hidden" : "";
     const navigate = useNavigate();
 
-    function removeHtmlTags(stringWithTags) {
+   
+
+    const removeHtmlTags = (stringWithTags) => {
         const temporaryElement = document.createElement("div");
         temporaryElement.innerHTML = stringWithTags;
         return temporaryElement.innerText;
+
     }
+
+
 
     return (
         <div id="note-list" className={visibilityClass}>

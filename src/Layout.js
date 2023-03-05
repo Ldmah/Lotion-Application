@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from './Sidebar';
 import uuid from "react-uuid";
 
@@ -37,6 +37,7 @@ function Layout() {
     
 
     // This function creates a new note in the Sidebar
+    const navigate = useNavigate();
     const createNewNote = () => {
         let note = {
             id: uuid(),
@@ -46,6 +47,7 @@ function Layout() {
         };
         currentNote(note);
         allNotes([note, ...notes]);
+        navigate('/notes/edit/1');
     }
 
     // This function deletes the current note
@@ -72,12 +74,18 @@ function Layout() {
                     body: content.body,
                 }
                 
+                
             }
             else {
                 return note;
             }
         });
         allNotes(saveNoteInfo);
+
+        const newActiveNote = saveNoteInfo.find((note) => note.id === content.id);
+        changeActiveNote(newActiveNote);
+        
+        //localStorage.setItem('notes', JSON.stringify(saveNoteInfo));
     }
 
     return (

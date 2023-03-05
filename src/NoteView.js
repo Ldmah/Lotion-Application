@@ -1,9 +1,14 @@
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 function NoteView() {
     const [notesList, activeNote, deleteCurrentNote, saveNote] = useOutletContext();
+    const navigate = useNavigate();
     const returnAsHtml = (string) => {
         return {__html: string};
+    }
+
+    const navToEdit = () => {
+        navigate('/notes/edit/1');
     }
 
     return (
@@ -22,7 +27,7 @@ function NoteView() {
                             </div>
                         </div>
                         <div id="buttons-view">
-                            <button id="edit">Edit</button>
+                            <button id="edit" onClick={(navToEdit)}>Edit</button>
                             <button id="delete" onClick={() => {
                                 deleteCurrentNote(activeNote);
                             }}>Delete</button>
