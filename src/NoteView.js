@@ -2,6 +2,10 @@ import { useOutletContext } from "react-router-dom";
 
 function NoteView() {
     const [notesList, activeNote, deleteCurrentNote, saveNote] = useOutletContext();
+    const returnAsHtml = (string) => {
+        return {__html: string};
+    }
+
     return (
         <div className="note-content">
             {notesList.length == 0 ? (
@@ -25,8 +29,7 @@ function NoteView() {
 
                         </div>
                     </div>
-                    <div id="content-view">
-                        {activeNote.body}
+                    <div id="content-view" dangerouslySetInnerHTML={returnAsHtml(activeNote.body)}>
                     </div>
                 </>
             )}

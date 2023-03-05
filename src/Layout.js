@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from './Sidebar';
 import uuid from "react-uuid";
@@ -11,9 +11,29 @@ function Layout() {
     function toggleNoteVisibility() { // Function that is called if button is clicked
         toggleHidden(!isHidden);
     }
-
+    // This function keeps track of the current note being edited and viewed
+    const [activeNote, changeActiveNote] = useState(null); // This manages the current active note, originally set to null (for nothing)
+    const currentNote = (newNote) => {
+        changeActiveNote(newNote);
+    }
+    
     // This function keeps track of all the notes
-    const [notes, allNotes] = useState([]);
+
+    const [notes, allNotes] = useState(() => {
+        const localStorageNotes = localStorage.getItem('notes');
+        if (localStorageNotes)
+        {
+            const pastInfo = JSON.parse(localStorageNotes);
+            changeActiveNote(pastInfo[0]);
+            return pastInfo;
+        }
+        return [];
+    });
+    
+    // This function stores all the notes in local storage
+    useEffect(() => {
+        localStorage.setItem('notes', JSON.stringify(notes));
+    }, [notes]);
     
 
     // This function creates a new note in the Sidebar
@@ -38,11 +58,7 @@ function Layout() {
         }
     }
 
-    // This function keeps track of the current note being edited and viewed
-    const [activeNote, changeActiveNote] = useState(null); // This manages the current active note, originally set to null (for nothing)
-    const currentNote = (newNote) => {
-        changeActiveNote(newNote);
-    }
+    
 
     // This function retrieves the information from the ReactQuill Editor, the date, and the title and puts it into the note object
     const saveNote = (content) => {
