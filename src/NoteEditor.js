@@ -1,5 +1,5 @@
 import ReactQuill from 'react-quill';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import 'react-quill/dist/quill.snow.css';
 import { useOutletContext } from "react-router-dom";
 
@@ -89,6 +89,15 @@ function NoteEditor() {
         }
         saveNote(content);
     };
+
+    useEffect(() => {
+        if (activeNote) {
+            setTitle(activeNote.title);
+            setDate(formatDate(new Date()));
+            const currentEditor = quillRef.current.getEditor();
+            currentEditor.setContents(currentEditor.clipboard.convert(activeNote.body));
+        }
+    }, [activeNote]);
 
     return (
         <div className="note-content">
