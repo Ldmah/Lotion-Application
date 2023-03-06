@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Sidebar from './Sidebar';
 import uuid from "react-uuid";
 
 // Layout is what controls all your logic for the content
 
 function Layout() {
+    
+    
+
     // This function allows the sidebar to appear and disappear depending on the button clicks
     const [isHidden, toggleHidden] = useState(false); // Default state is false
     function toggleNoteVisibility() { // Function that is called if button is clicked
@@ -29,6 +32,17 @@ function Layout() {
         }
         return [];
     });
+
+    // Sets routing and URL
+    const { noteId } = useParams();
+    useEffect(() => {
+        if (noteId != null)
+        {
+            let currentNote = notes[noteId - 1];
+            changeActiveNote(currentNote);
+        }
+
+    }, [noteId, notes]);
     
     // This function stores all the notes in local storage
     useEffect(() => {
@@ -72,9 +86,7 @@ function Layout() {
                     title: content.title,
                     date: content.date,
                     body: content.body,
-                }
-                
-                
+                }      
             }
             else {
                 return note;

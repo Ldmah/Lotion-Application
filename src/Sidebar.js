@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activeNote }) {
     const visibilityClass = visibility ? "hidden" : "";
@@ -13,8 +13,7 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
 
     }
 
-
-
+   
     return (
         <div id="note-list" className={visibilityClass}>
             <div id="note-list-header">
@@ -23,18 +22,20 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
             </div>
             {notesList.length > 0 ? (
                 <div id="note-identifiers">
-                    {notesList.map((note) => (
-                        <div key={note.id} className={`note-item ${note.id === activeNote.id ? "clicked" : ""}`} onClick={() => changeActiveNote(note)}>
-                            <div className="note-item-title">
-                                <strong>{note.title}</strong>
+                    {notesList.map((note, index) => (
+                        <Link to={`/notes/${index + 1}`}>
+                            <div key={note.id} className={`note-item ${note.id === activeNote.id ? "clicked" : ""}`} onClick={() => changeActiveNote(note)}>
+                                <div className="note-item-title">
+                                    <strong>{note.title}</strong>
+                                </div>
+                                <div className="note-item-date">
+                                    {note.date}
+                                </div>
+                                <div className="note-item-preview">
+                                    {removeHtmlTags(note.body).substring(0, 20) + "\n" + removeHtmlTags(note.body).substring(20, 38) + "..."}
+                                </div>
                             </div>
-                            <div className="note-item-date">
-                                {note.date}
-                            </div>
-                            <div className="note-item-preview">
-                                {removeHtmlTags(note.body).substring(0, 20) + "\n" + removeHtmlTags(note.body).substring(20, 38) + "..."}
-                            </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             ) : (
