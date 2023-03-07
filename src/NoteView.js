@@ -1,4 +1,4 @@
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 
 function NoteView() {
     const [notesList, activeNote, deleteCurrentNote, saveNote] = useOutletContext();
@@ -7,8 +7,12 @@ function NoteView() {
         return {__html: string};
     }
 
+    // Implement loop to find the noteId manually and put it in since /1, /2 works
+    // Iterate through and try to match the activeNote withinthe notesList, find an integer and put it into navigate
+    
     const navToEdit = () => {
-        navigate('/notes/edit/1');
+        const activeNoteIndex = notesList.findIndex(note => note.id === activeNote.id) + 1;
+        navigate(`/notes/edit/${activeNoteIndex}`);
     }
 
     return (
