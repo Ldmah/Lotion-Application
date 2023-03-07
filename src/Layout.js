@@ -97,8 +97,6 @@ function Layout() {
 
         const newActiveNote = saveNoteInfo.find((note) => note.id === content.id);
         changeActiveNote(newActiveNote);
-        
-        //localStorage.setItem('notes', JSON.stringify(saveNoteInfo));
     }
 
     return (

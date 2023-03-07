@@ -98,10 +98,13 @@ function NoteEditor() {
         saveNote(content);
         
     };
-    
+    const navToEdit = () => {
+        const activeNoteIndex = notesList.findIndex(note => note.id === activeNote.id) + 1;
+        navigate(`/notes/${activeNoteIndex}`);
+    }
     const saveAndNav = () => {
         save();
-        navigate('/notes/1');
+        navToEdit();
     }
 
     // This function assists us in navigating from note to note in the edit section
