@@ -42,7 +42,7 @@ function Layout() {
             changeActiveNote(currentNote);
         }
 
-    }, [noteId, notes]);
+    }, [notes, noteId]);
     
     // This function stores all the notes in local storage
     useEffect(() => {
@@ -71,6 +71,7 @@ function Layout() {
             let stateWithoutDeleted = notes.filter((note) => note.id !== noteDelete.id);
             allNotes(stateWithoutDeleted);
             changeActiveNote(stateWithoutDeleted[0]);
+            navigate('/notes/1');
         }
     }
 

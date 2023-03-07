@@ -75,6 +75,14 @@ function NoteEditor() {
 
     // Setting up states to contain the contents of each edited note
     const [currentTitle, setTitle] = useState("Untitled");
+    
+    // Getting rid of blank paragraphs:
+    const removeWhitespace = (text) => {
+        while (text.indexOf('<p><br></p>') !== -1) {
+            text = text.replace('<p><br></p>', '');
+          }
+          return text;
+    }
 
     // Saving current data in the Quill Editor and saving it to view; redirecting to the corresponding view
     const quillRef = useRef(null);
@@ -83,7 +91,7 @@ function NoteEditor() {
         
         let content = {
             id: activeNote.id,
-            body: html,
+            body: removeWhitespace(html),
             title: currentTitle,
             date: formatDateSidebar(date),
         }

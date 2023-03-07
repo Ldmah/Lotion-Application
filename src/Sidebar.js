@@ -23,6 +23,7 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
             {notesList.length > 0 ? (
                 <div id="note-identifiers">
                     {notesList.map((note, index) => (
+                        <div>
                         <Link to={`/notes/${index + 1}`}>
                             <div key={note.id} className={`note-item ${note.id === activeNote.id ? "clicked" : ""}`} onClick={() => changeActiveNote(note)}>
                                 <div className="note-item-title">
@@ -36,6 +37,7 @@ function Sidebar({ visibility, notesList, createNewNote, changeActiveNote, activ
                                 </div>
                             </div>
                         </Link>
+                        </div>
                     ))}
                 </div>
             ) : (
